@@ -1,34 +1,31 @@
-interface IProduct {
+export interface IProduct {
     id: string;
     title: string;
     description: string;
     category: string;
     image: string;
     price: number | null;
-    addProduct (id: string): void;
-    deleteProduct (id: string): void;
-}
+    selected: boolean;
+} 
 
-interface IUserData {
-    payment: 'online' | 'personally';
+export interface IUserData {
+    payment: string;
     address: string;
     email: string;
-    tel: string;
+    phone: string;
+    total: number;
+    items: string[];
 }
 
-interface IBascet {
-    products: Map<string, number>;
-    deleteProduct: IProduct['deleteProduct'];
-    summationPrice(price: number | null): number | null;
+export interface IOrderResult {
+    id: string;
+    total: number;
 }
 
-interface IProductRender {
-    products: TProductRender[];
-    getProduct(id: string): IProduct;
-}
+export type IGalleryItem = Pick<IProduct, 'id' | 'title' | 'image' | 'price' | 'category'>;
 
-type TProductRender = Omit<IProduct, 'description'>;
+export type IBasketItem = Pick<IProduct, 'id' | 'title' | 'price' | 'selected'>;
 
-type TUserAddress = Pick<IUserData, 'address' | 'payment'>;
+export type IUserAddress = Pick<IUserData, 'address' | 'payment'>;
 
-type TUserContacts = Pick<IUserData, 'email' | 'tel'>;
+export type IUserContacts = Pick<IUserData, 'email' | 'phone'>;
