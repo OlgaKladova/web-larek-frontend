@@ -90,15 +90,16 @@ events.on('modal:close', () => {
 
 events.on('order:open', () => {
     modal.render({content: order.render({
-        error: {field: 'address'},
+        error: {
+            field: 'address',
+            errorMessage: 'Введите данные'},
+        valid: true
         }
     )});
     userData.userInfo = {
         total: model.total,
         items: model.selectedProducts.map(product => product.id),
-    }
-   
-    
+    }    
 })
 
 events.on('pay:select', (data: {name: string}) => {
@@ -106,6 +107,7 @@ events.on('pay:select', (data: {name: string}) => {
     userData.userInfo = Object.assign(userData.userInfo, {
         payment: data.name
     })
+    userData.validate();
 })
 
 events.on('order:input', (data: {value: string, field: string}) => {
@@ -114,20 +116,30 @@ events.on('order:input', (data: {value: string, field: string}) => {
             address: data.value
         })
     };
-    if (order.valid = data.value === '') {
+
+    if (data.value === '') {
         order.error = {field: data.field, errorMessage: 'Вы пропустили поле'};
-        return true
     } else {
         order.error = {field: data.field, errorMessage: ''};
-        return false
     }
-    
+    userData.validate();
+})
+
+events.on('order:change' , () => {
+    order.valid = false;
 })
 
 events.on('order:submit', () => {
-    order.validButton();
-    modal.render({content: contacts.render()});
+    order.validButton(); 
+    modal.render({content: contacts.render({
+        valid: true
+        }
+    )});
     order.clear();
+})
+
+events.on('contacts:change', () => {
+    contacts.valid = false;
 })
 
 events.on('contacts:input', (data: {value: string, field: string}) => {
@@ -143,13 +155,12 @@ events.on('contacts:input', (data: {value: string, field: string}) => {
         })
     };
 
-    if (contacts.valid = data.value === '' || null) {
+    if (data.value === '' || null) {
         contacts.error = {field: data.field, errorMessage: 'Вы пропустили поле'};
-        return true
     } else {
         contacts.error = {field: data.field, errorMessage: ''};
-        return false
     }
+    userData.validate();
 })
 
 events.on('contacts:submit', () => {

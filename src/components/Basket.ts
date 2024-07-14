@@ -28,8 +28,6 @@ export class Basket extends Component<IBasket> {
 
     set list(items: HTMLElement[]) {
         this.basketList.replaceChildren(...items);
-        items.length === 0 ?
-        this.setDisabled(this.basketButton, true) :
-        this.setDisabled(this.basketButton, false);
+        this.setDisabled(this.basketButton, items.length === 0);
     }
 }

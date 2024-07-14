@@ -11,7 +11,7 @@ class Form extends Component<IForm> {
     protected formButton: HTMLButtonElement;
     protected formErrors: HTMLElement;
     protected formInputs: HTMLInputElement[];
-    
+        
     constructor(protected container: HTMLFormElement, protected events: IEvents) {
         super(container);
         
@@ -61,13 +61,13 @@ class Form extends Component<IForm> {
     }
 
     protected hideError(field: string) {
-        this.container[field].classList.remove('form__input:invalid');
+        this.toggleClass(this.container[field], 'form__input:invalid');
         this.setHidden(this.formErrors);
         this.setText(this.formErrors, '');
     }
 
     protected showError(field: string, message: string) {
-        this.container[field].classList.add('form__input:invalid');
+        this.toggleClass(this.container[field], 'form__input:invalid');
         this.setVisible(this.formErrors);
         this.setText(this.formErrors, message);
     }
