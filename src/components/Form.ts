@@ -100,10 +100,13 @@ protected _buttons: HTMLButtonElement[];
             this.setDisabled(button, button.name === name)
         });
     }
-    validButton (): boolean{
-        return !this._buttons.some(button => {
-            return button.classList.contains('button_alt-active')
-        })
+
+    clear(){
+        super.clear()
+        this._buttons.forEach(button => {
+            this.toggleClass(button, '.button_alt-active', false);
+            this.setDisabled(button, false)
+        });
     }
 }
 

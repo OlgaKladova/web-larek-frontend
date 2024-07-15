@@ -116,7 +116,6 @@ events.on('order:input', (data: {value: string, field: string}) => {
             address: data.value
         })
     };
-
     if (data.value === '') {
         order.error = {field: data.field, errorMessage: 'Вы пропустили поле'};
     } else {
@@ -129,8 +128,11 @@ events.on('order:change' , () => {
     order.valid = false;
 })
 
+events.on('order:error', () => {
+    order.valid = true;
+})
+
 events.on('order:submit', () => {
-    order.validButton(); 
     modal.render({content: contacts.render({
         valid: true
         }
@@ -140,6 +142,10 @@ events.on('order:submit', () => {
 
 events.on('contacts:change', () => {
     contacts.valid = false;
+})
+
+events.on('contacts:error', () => {
+    contacts.valid = true;
 })
 
 events.on('contacts:input', (data: {value: string, field: string}) => {

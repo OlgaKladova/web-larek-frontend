@@ -44,11 +44,21 @@ export class UserData implements IUserData {
     }
 
     validate() {
-        if (this.userInfo.payment !== undefined && this.userInfo.address !== undefined) {
+        if (this.userInfo.payment !== undefined &&
+            this.userInfo.address !== undefined && 
+            this.userInfo.address !== '') {
             this.events.emit('order:change');
+        } else {
+            this.events.emit('order:error');
         }
-        if (this.userInfo.email !== undefined && this.userInfo.phone !== undefined) {
+
+        if (this.userInfo.email !== undefined &&
+            this.userInfo.email !== '' &&
+            this.userInfo.phone !== '' &&
+            this.userInfo.phone !== undefined) {
             this.events.emit('contacts:change');
+        } else {
+            this.events.emit('contacts:error');
         }
     }
 }
